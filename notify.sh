@@ -59,7 +59,7 @@ else
   # ===== Codex 分支（无 stdin JSON）=====
   # ====================================
   # 兼容 Codex CLI：最后一个参数是带 input-messages 的 JSON
-  if [ "$has_jq" -eq 1 ] && [ $# -ge 2 ]; then
+  if [ "$has_jq" -eq 1 ] && [ $# -ge 1 ]; then
     last_arg="${@: -1}"
     if [[ "$last_arg" == \{* ]]; then
       body="$(printf '%s\n' "$last_arg" | jq -r '.["input-messages"] | .[-1] // empty' 2>/dev/null || echo "$body")"
@@ -67,9 +67,9 @@ else
   fi
 fi
 
-# 截断过长的 body（> 30 字符截断为 20 字符 + ...）
-if [ ${#body} -gt 30 ]; then
-  body="${body:0:20}..."
+# 截断过长的 body（> 40 字符截断为 35 字符 + ...）
+if [ ${#body} -gt 40 ]; then
+  body="${body:0:35}..."
 fi
 
 if command -v notify-send >/dev/null 2>&1; then
