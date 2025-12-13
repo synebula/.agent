@@ -2,7 +2,8 @@
 
 set -euo pipefail
 
-title="Codex 任务已完成"
+agent=""
+title="任务已完成"
 body=""
 
 has_jq=0
@@ -27,7 +28,7 @@ if [ "$has_jq" -eq 1 ] && [ -n "$hook_input" ]; then
   # ====================================
   # ===== Claude Code 分支（有 stdin JSON）=====
   # ====================================
-  title="CC 任务已完成"
+  agent="Claude Code"
   session_id=""
 
   transcript_path="$(printf '%s\n' "$hook_input" | jq -r '.transcript_path // empty' 2>/dev/null || true)"
@@ -55,6 +56,7 @@ if [ "$has_jq" -eq 1 ] && [ -n "$hook_input" ]; then
     fi
   fi
 else
+  agent="Codex"
   # ====================================
   # ===== Codex 分支（无 stdin JSON）=====
   # ====================================
@@ -73,7 +75,7 @@ if [ ${#body} -gt 40 ]; then
 fi
 
 if command -v notify-send >/dev/null 2>&1; then
-  notify-send "$title" "$body"
+  notify-send --app-name="$agent" "$title" "$body"
 fi
 
 if command -v paplay >/dev/null 2>&1; then

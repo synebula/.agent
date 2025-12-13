@@ -22,6 +22,7 @@
 ## 1. Core Standards (核心规范)
 
 **简体中文优先**：所有回复、文档、注释使用简体中文（代码标识符除外）
+** git commit message 使用英文 **
 
 ### 1.1 核心原则（不可违反）
 
@@ -62,7 +63,7 @@
   - 关键决策与变更（为什么改、改了什么、影响范围）
   - 遇到的问题与解决方案（问题描述、尝试方案、最终方案）
   - 下一步行动（明确的下一步是什么、依赖条件）
-- **TASK文档格式**：见 `.agent/templates/TASK.md`
+- **TASK文档格式**：见 `~/.agent/templates/TASK.md`
 
 ### 1.2 标准工作流（3 步）
 
@@ -128,7 +129,7 @@
 
 #### CONTEXT.md 模板
 
-完整模板见：`.agent/templates/CONTEXT.md`
+完整模板见：`~/.agent/templates/CONTEXT.md`
 
 **设计原则**：
 - **索引优先**：CONTEXT.md 是导航，不是百科全书
@@ -164,7 +165,7 @@
 
 #### CHANGELOG.md 模板
 
-完整模板见：`.agent/templates/CHANGELOG.md`
+完整模板见：`~/.agent/templates/CHANGELOG.md`
 
 **用途**：记录架构调整、重要功能上线、技术选型变更，按需查阅
 
@@ -268,16 +269,16 @@ routes:
 当用户明确要求使用特定角色视角时（如"以 Linus 的视角审查代码"），读取对应 persona 文件并应用其哲学和输出模式。
 
 **可用角色**：
-- **Linus Torvalds**（架构师/审查者）：`.agent/personas/linus.md`
+- **Linus Torvalds**（架构师/审查者）：`~/.agent/personas/linus.md`
 
 ---
 
 ## 附录
 
 **模板文件位置**：
-- TASK 文档：`.agent/templates/TASK.md`
-- CONTEXT 文档：`.agent/templates/CONTEXT.md`
-- CHANGELOG 文档：`.agent/templates/CHANGELOG.md`
+- TASK 文档：`~/.agent/templates/TASK.md`
+- CONTEXT 文档：`~/.agent/templates/CONTEXT.md`
+- CHANGELOG 文档：`~/.agent/templates/CHANGELOG.md`
 
 **角色定义位置**：
-- Linus Torvalds：`.agent/personas/linus.md`
+- Linus Torvalds：`~/.agent/personas/linus.md`
