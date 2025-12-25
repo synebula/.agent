@@ -3,6 +3,7 @@
 set -euo pipefail
 
 agent=""
+icon=""
 title="任务已完成"
 body=""
 
@@ -29,6 +30,7 @@ if [ "$has_jq" -eq 1 ] && [ -n "$hook_input" ]; then
   # ===== Claude Code 分支（有 stdin JSON）=====
   # ====================================
   agent="Claude Code"
+  icon="/home/alex/.agent/claude/claude.png"
   session_id=""
 
   transcript_path="$(printf '%s\n' "$hook_input" | jq -r '.transcript_path // empty' 2>/dev/null || true)"
@@ -56,6 +58,7 @@ if [ "$has_jq" -eq 1 ] && [ -n "$hook_input" ]; then
     fi
   fi
 else
+  icon="/home/alex/.agent/codex/openai.png"
   agent="Codex"
   # ====================================
   # ===== Codex 分支（无 stdin JSON）=====
@@ -75,7 +78,7 @@ if [ ${#body} -gt 40 ]; then
 fi
 
 if command -v notify-send >/dev/null 2>&1; then
-  notify-send --app-name="$agent" "$title" "$body"
+  notify-send -i "$icon" -a "$agent" "$title" "$body"
 fi
 
 if command -v paplay >/dev/null 2>&1; then
