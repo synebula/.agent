@@ -82,15 +82,14 @@ send_notification() {
   command -v notify-send >/dev/null 2>&1 || return 1
 
   if is_hyprland && [ -n "$win_addr" ]; then
-    # Hyprland 环境：后台等待点击，每个通知独立携带窗口信息
-    (
-      action=$(notify-send -i "$icon" -a "$agent" --action="default=打开终端" "$title" "$body" || true)
+    # Hyprland 环境：使用 setsid 创建独立会话，完全脱离调用方
+    setsid bash -c '
+      action=$(notify-send -i "'"$icon"'" -a "'"$agent"'" --action="default=打开终端" "'"$title"'" "'"$body"'" 2>/dev/null || true)
       if [ "$action" = "default" ]; then
-        [ -n "$ws_id" ] && hyprctl dispatch workspace "$ws_id" >/dev/null 2>&1
-        hyprctl dispatch focuswindow "address:$win_addr" >/dev/null 2>&1
+        [ -n "'"$ws_id"'" ] && hyprctl dispatch workspace "'"$ws_id"'" >/dev/null 2>&1
+        hyprctl dispatch focuswindow "address:'"$win_addr"'" >/dev/null 2>&1
       fi
-    ) &
-    disown
+    ' </dev/null >/dev/null 2>&1 &
   else
     # 非 Hyprland 环境：普通通知
     notify-send -i "$icon" -a "$agent" "$title" "$body"
